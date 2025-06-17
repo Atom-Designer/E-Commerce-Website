@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Any Kart - Shop Smart</title>
+  <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/a1/c0/c6/a1c0c6d397cc1ebf7f3ef848528f4fc1.jpg">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    header {
+      background: #000;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 2px solid #444;
+    }
+    .logo {
+      height: 50px;
+      margin-right: 15px;
+      border-radius: 10px;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #111;
+      border-bottom: 1px solid #333;
+      z-index: 999;
+    }
+    .navbar nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+    .navbar nav a:hover {
+      color: #f0c040;
+    }
+    .cart-container {
+      position: relative;
+    }
+    .cart-icon {
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+    }
+    .section-divider {
+      width: 100%;
+      height: 2px;
+      background: #222;
+      margin: 40px 0;
+    }
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 10%;
+      background: linear-gradient(to right, #111, #222);
+    }
+    .hero-text {
+      max-width: 50%;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #f0c040;
+    }
+    .hero button {
+      padding: 15px 30px;
+      font-size: 1rem;
+      background: #f0c040;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .hero button:hover {
+      background: #e6b800;
+      transform: translateY(-2px);
+    }
+    .hero img {
+      width: 40%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 50px 20px;
+      background: #111;
+    }
+    .product-card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 15px;
+      width: 250px;
+      box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #f0c040;
+    }
+    .product-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+    }
+    .product-card h3 {
+      font-size: 1.3rem;
+      margin: 10px 0;
+      color: #f0c040;
+    }
+    .product-card p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+    .product-card button {
+      padding: 10px 20px;
+      background: #f0c040;
+      color: black;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .product-card button:hover {
+      background: #e6b800;
+      transform: translateY(-2px);
+    }
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 20px;
+    }
+    .footer-text {
+      color: gray;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    footer nav a {
+      color: gray;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 0.8rem;
+    }
+    footer nav a:hover {
+      color: #f0c040;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-text {
+        max-width: 100%;
+      }
+      .hero img {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://i.pinimg.com/736x/a1/c0/c6/a1c0c6d397cc1ebf7f3ef848528f4fc1.jpg" alt="Any Kart Logo" class="logo">
+  Any Kart
+</header>
+
+<div class="navbar">
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="category.html">Categories</a>
+    <a href="cart.html">Cart</a>
+    <a href="products.html">Products</a>
+    <a href="account.html">Account</a>
+  </nav>
+  <div class="cart-container">
+    <span class="cart-icon">🛒</span>
+    <span class="cart-count">0</span>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Shop Smart with Any Kart</h1>
+    <button onclick="location.href='products.html'">Start Shopping</button>
+  </div>
+  <img loading="lazy" src="https://cdn.create.vista.com/api/media/small/319560848/stock-photo-excited-friends-having-fun-shopping-bags-shopping-cart-black-friday" alt="Excited friends shopping with cart">
+</section>
+
+<div class="section-divider"></div>
+
+<section class="products">
+  <div class="product-card">
+    <img loading="lazy" src="https://img.freepik.com/free-psd/smartphone-with-cloud-screen-isolated-black-background_1142-53270.jpg" alt="Latest 5G Smartphone">
+    <h3>Smartphone</h3>
+    <p>$699.99</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img loading="lazy" src="https://cdnp2.stackassets.com/c9f278300be0df14d3c5d6267fc25c0184c9d6d2/store/0532a3823a4cc4877625f7afa8b2b2076c6e322f38980da24d7fdc2501d0/image_original.jpg" alt="High-performance Gaming Laptop">
+    <h3>Gaming Laptop</h3>
+    <p>$1,299.99</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img loading="lazy" src="https://media.sonos.com/images/znqtjj88/production/6d1891b5f7a2236498c20a2fe895506dc0ba6ab9-2500x2500.png?q=75&fit=clip&auto=format" alt="Premium Wireless Headphones">
+    <h3>Wireless Headphones</h3>
+    <p>$199.99</p>
+    <button>Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img loading="lazy" src="https://lh3.googleusercontent.com/yStrNz7l0aUnjKWo7jyJYXHfSLZmg6TyseayaF61NneZBOSfSKilQ-o3LoYZB-ucPnq7qUVmla6ARmrwiw-8eQTeWjU64xHd_g=s0" alt="Advanced Fitness Smartwatch">
+    <h3>Smartwatch</h3>
+    <p>$149.99</p>
+    <button>Add to Cart</button>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<footer>
+  <p class="footer-text">&copy; 2025 Any Kart. All rights reserved.</p>
+  <nav>
+    <a href="#">Privacy Policy</a> |
+    <a href="#">Terms of Service</a>
+  </nav>
+</footer>
+
+</body>
+</html>

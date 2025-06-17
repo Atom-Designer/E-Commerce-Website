@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cart - Any Kart</title>
+  <style>
+    /* General Reset and Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    header a:hover {
+      color: #1abc9c;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    th {
+      background-color: #2d3436;
+      color: white;
+      font-weight: 600;
+    }
+
+    td img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    td button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      color: white;
+      background-color: #e74c3c;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    td button:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    .quantity-btns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .quantity-btn {
+      padding: 8px 14px;
+      font-size: 1rem;
+      border-radius: 5px;
+      margin: 0 5px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .quantity-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .checkout-btn {
+      background-color: #1abc9c;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .checkout-btn:hover {
+      background-color: #16a085;
+      transform: translateY(-2px);
+    }
+
+    .cart-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      font-size: 1.3rem;
+      padding: 15px 0;
+      border-top: 1px solid #ddd;
+      font-weight: 600;
+    }
+
+    .cart-summary .total {
+      font-size: 1.5rem;
+      color: #1abc9c;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      table, .cart-summary {
+        font-size: 0.9rem;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .checkout-btn {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Your Cart</h1>
+  <a href="products.html">Back to Products</a>
+</header>
+
+<main>
+  <table id="cartTable">
+    <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Cart items will be injected here -->
+    </tbody>
+  </table>
+
+  <div class="cart-summary">
+    <span>Total: $<span id="cartTotal">0.00</span></span>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</main>
+
+<script>
+  const cartTable = document.getElementById('cartTable').getElementsByTagName('tbody')[0];
+  const cartTotal = document.getElementById('cartTotal');
+
+  function displayCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartTable.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const row = `
+        <tr>
+          <td><img src="${item.image}" alt="${item.name}"></td>
+          <td>${item.name}</td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>
+            <div class="quantity-btns">
+              <button class="quantity-btn" onclick="updateQuantity(${index}, 'decrease')">-</button>
+              <span>${item.quantity}</span>
+              <button class="quantity-btn" onclick="updateQuantity(${index}, 'increase')">+</button>
+            </div>
+          </td>
+          <td><button class="remove-btn" onclick="removeFromCart(${index})">Remove</button></td>
+        </tr>
+      `;
+      cartTable.innerHTML += row;
+      total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
+  }
+
+  function updateQuantity(index, action) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (action === 'increase') {
+      cart[index].quantity++;
+    } else if (action === 'decrease' && cart[index].quantity > 1) {
+      cart[index].quantity--;
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart();
+  }
+
+  function removeFromCart(index) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCart(); // Update the cart after removal
+  }
+
+  displayCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Explore a wide range of categories at Any Kart. Shop Electronics, Clothing, Sports, Books, and more!"/>
+  <meta name="keywords" content="online shopping, electronics, clothing, sports, books, beauty, home & kitchen"/>
+  <title>Categories - Any Kart</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/263/263142.png" type="image/x-icon"/>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+    }
+    header {
+      background: #000;
+      color: white;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid white;
+    }
+    .logo {
+      max-height: 50px;
+      filter: invert(1);
+    }
+    nav {
+      display: flex;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1rem;
+    }
+    nav a:hover {
+      color: gray;
+    }
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+    #searchBar {
+      padding: 10px;
+      width: 60%;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    #searchBar:focus {
+      outline: none;
+      background-color: #444;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .category-card {
+      background: #111;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      border: 2px solid white;
+      transition: 0.3s ease-in-out;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
+    }
+    .category-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid white;
+    }
+    .category-card h2 {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+    .badge {
+      background: white;
+      color: black;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-left: 6px;
+    }
+    footer {
+      background: black;
+      color: gray;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 20px;
+      border-top: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://cdn-icons-png.flaticon.com/512/34/34568.png" alt="Any Kart Logo" class="logo" width="50" />
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="category.html">Categories</a>
+    <a href="cart.html">Cart</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Shop by Category</h1>
+  <input type="text" id="searchBar" placeholder="Search categories..." aria-label="Search categories">
+
+  <div class="categories">
+    <a href="electronics.html" class="category-card" title="Explore the latest electronics and gadgets">
+      <img src="https://source.unsplash.com/400x300/?electronics,gadgets" alt="Electronics Category">
+      <h2>Electronics <span class="badge">32</span></h2>
+    </a>
+
+    <a href="clothing.html" class="category-card" title="Trendy and comfortable clothes">
+      <img src="https://source.unsplash.com/400x300/?fashion,clothing" alt="Clothing Category">
+      <h2>Clothing <span class="badge">45</span></h2>
+    </a>
+
+    <a href="home.html" class="category-card" title="Home essentials and kitchen tools">
+      <img src="https://source.unsplash.com/400x300/?home,kitchen" alt="Home & Kitchen Category">
+      <h2>Home & Kitchen <span class="badge">27</span></h2>
+    </a>
+
+    <a href="sports.html" class="category-card" title="Fitness gear and sports items">
+      <img src="https://source.unsplash.com/400x300/?sports,fitness" alt="Sports Category">
+      <h2>Sports <span class="badge">18</span></h2>
+    </a>
+
+    <a href="beauty.html" class="category-card" title="Makeup, skincare and personal care">
+      <img src="https://source.unsplash.com/400x300/?beauty,cosmetics" alt="Beauty & Personal Care Category">
+      <h2>Beauty & Personal Care <span class="badge">36</span></h2>
+    </a>
+
+    <a href="books.html" class="category-card" title="Books for all readers">
+      <img src="https://source.unsplash.com/400x300/?books,reading" alt="Books Category">
+      <h2>Books <span class="badge">52</span></h2>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Any Kart. All rights reserved.</p>
+</footer>
+
+<script>
+  const searchBar = document.getElementById('searchBar');
+  searchBar.addEventListener('input', () => {
+    const term = searchBar.value.toLowerCase();
+    document.querySelectorAll('.category-card').forEach(card => {
+      const title = card.querySelector('h2').textContent.toLowerCase();
+      card.style.display = title.includes(term) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

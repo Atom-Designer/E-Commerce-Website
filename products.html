@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products - Any Kart</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #2d3436;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .cart-icon {
+      font-size: 1.8rem;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      color: white;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 40px 24px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #2d3436;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    th {
+      background-color: #2d3436;
+      color: white;
+      font-weight: 600;
+    }
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    td {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-btn {
+      background-color: #27ae60;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cart-btn:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+
+    /* Success popup */
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #2ecc71;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.4s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .popup.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      table {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      td {
+        display: block;
+        text-align: right;
+        position: relative;
+        padding-left: 40%;
+        padding-right: 10px;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Any Kart</h1>
+  <a href="cart.html" class="cart-icon">
+    🛒 <span class="cart-count" id="cartCount">0</span>
+  </a>
+</header>
+
+<main>
+  <h2>Available Products</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody id="productsTable">
+    <!-- Products will be injected here -->
+    </tbody>
+  </table>
+</main>
+
+<!-- Popup -->
+<div class="popup" id="popup">Product added to cart!</div>
+
+<script>
+  const products = [
+    { id: 1, name: 'Laptop', price: 999.99, image: 'https://cdnp2.stackassets.com/c9f278300be0df14d3c5d6267fc25c0184c9d6d2/store/0532a3823a4cc4877625f7afa8b2b2076c6e322f38980da24d7fdc2501d0/image_original.jpg', description: 'A high-performance laptop.' },
+    { id: 2, name: 'Smartphone', price: 499.99, image: 'https://img.freepik.com/free-psd/smartphone-with-cloud-screen-isolated-black-background_1142-53270.jpg', description: 'A latest-gen smartphone.' },
+    { id: 3, name: 'Wireless Headphones', price: 199.99, image: 'https://media.sonos.com/images/znqtjj88/production/6d1891b5f7a2236498c20a2fe895506dc0ba6ab9-2500x2500.png?q=75&fit=clip&auto=format', description: 'Noise-canceling wireless headphones.' },
+    { id: 4, name: 'Running Shoes', price: 89.99, image: 'https://images.unsplash.com/photo-1645833889386-2782e290ee3b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8', description: 'Comfortable sports running shoes.' },
+    { id: 5, name: 'Smartwatch', price: 149.99, image: 'https://lh3.googleusercontent.com/yStrNz7l0aUnjKWo7jyJYXHfSLZmg6TyseayaF61NneZBOSfSKilQ-o3LoYZB-ucPnq7qUVmla6ARmrwiw-8eQTeWjU64xHd_g=s0', description: 'Track fitness and notifications.' }
+  ];
+
+  const productsTable = document.getElementById('productsTable');
+  const cartCount = document.getElementById('cartCount');
+  const popup = document.getElementById('popup');
+
+  function displayProducts() {
+    products.forEach(product => {
+      const row = `
+        <tr>
+          <td data-label="ID">${product.id}</td>
+          <td data-label="Image"><img src="${product.image}" alt="${product.name}"></td>
+          <td data-label="Name">${product.name}</td>
+          <td data-label="Price">$${product.price.toFixed(2)}</td>
+          <td data-label="Description">${product.description}</td>
+          <td data-label="Action"><button class="cart-btn" onclick="addToCart(${product.id})">Add to Cart</button></td>
+        </tr>
+      `;
+      productsTable.innerHTML += row;
+    });
+  }
+
+  function addToCart(id) {
+    const selectedProduct = products.find(p => p.id === id);
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(selectedProduct);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    showPopup(`${selectedProduct.name} added to cart!`);
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartCount.textContent = cart.length;
+  }
+
+  function showPopup(message) {
+    popup.textContent = message;
+    popup.classList.add('show');
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, 2000);
+  }
+
+  displayProducts();
+  updateCartCount();
+</script>
+
+</body>
+</html>
