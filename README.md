@@ -1,4 +1,5 @@
-**#Any Kart - Modern E-Commerce UI**
+#**Any Kart - Modern E-Commerce UI**
+
 Any Kart is a responsive front-end e-commerce web application built using HTML, CSS, and vanilla JavaScript. It features a modern product listing page and a dynamic cart system, designed with a focus on user experience and clean UI.
 
 Features
